@@ -8,20 +8,12 @@ const getResponseData = async (request) => {
   return await response.data;
 };
 
-const getPersons = () => {
-  return getResponseData(axios.get(baseUrl));
-};
+const getAll = () => getResponseData(axios.get(baseUrl));
 
-const addPerson = (person) => {
-  return getResponseData(axios.post(baseUrl, person));
-};
+const add = (person) => getResponseData(axios.post(baseUrl, person));
 
-const modifyPerson = async (person) => {
-  return getResponseData(axios.put(`${baseUrl}/${person.id}`, person));
-};
+const modify = (person) =>
+  getResponseData(axios.put(`${baseUrl}/${person.id}`, person));
 
-const removePerson = async (id) => {
-  return getResponseData(axios.delete(`${baseUrl}/${id}`));
-};
-
-export default { getPersons, addPerson, modifyPerson, removePerson };
+const remove = (id) => getResponseData(axios.delete(`${baseUrl}/${id}`));
+export default { getAll, add, modify, remove };

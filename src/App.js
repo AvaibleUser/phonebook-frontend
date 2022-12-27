@@ -1,8 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-import axios from "axios";
-
 import Filter from "./components/LabeledInput";
 import Persons from "./components/Persons";
 import PersonForm from "./components/PersonForm";
@@ -24,14 +22,33 @@ const App = () => {
 
   const filteredPersons = filterPersons(filter, persons);
 
-  const removePersonFromState = (id) =>
-    setPersons(persons.filter((person) => person.id !== id));
-
   const removePerson = (id) =>
-    personsService.removePerson(id).then(() => removePersonFromState(id));
+    personsService
+      .remove(id)
+      .then(() => setPersons(persons.filter((person) => person.id !== id)));
+
+  const addPerson = async ({ name, number }) => {
+    const previousPerson = persons.find((person) => person.name === name);
+
+    if (!previousPerson) {
+      const person = await personsService.add({ name, number });
+
+      setPersons(persons.concat(person));
+      return;
+    }
+
+    const newPerson = await personsService.modify({
+      ...previousPerson,
+      number,
+    });
+
+    setPersons(
+      persons.map((person) => (person.id !== newPerson.id ? person : newPerson))
+    );
+  };
 
   useEffect(() => {
-    personsService.getPersons().then(setPersons);
+    personsService.getAll().then(setPersons);
   }, []);
 
   return (
@@ -45,7 +62,7 @@ const App = () => {
         number={newNumber}
         setName={setNewName}
         setNumber={setNewNumber}
-        setPersons={setPersons}
+        addPerson={addPerson}
       />
 
       <h3>Numbers</h3>
