@@ -1,33 +1,24 @@
-import React from 'react';
+import React from "react";
 
-import LabeledInput from './LabeledInput';
+import LabeledInput from "./LabeledInput";
 
-const PersonForm = ({
-  persons,
-  newName,
-  newNumber,
-  setPersons,
-  setNewName,
-  setNewNumber,
-}) => {
-  const addPerson = (event) => {
+import personsService from "../services/persons";
+
+const PersonForm = ({ name, number, setName, setNumber, setPersons }) => {
+  const addPerson = async (event) => {
     event.preventDefault();
 
-    setPersons(
-      persons.concat({
-        id: persons.length + 1,
-        name: newName,
-        number: newNumber,
-      })
-    );
-    setNewName('');
-    setNewNumber('');
+    const person = await personsService.addPerson({ name, number });
+
+    setName("");
+    setNumber("");
+    setPersons((persons) => persons.concat(person));
   };
 
   return (
     <form>
-      <LabeledInput label="name:" value={newName} setValue={setNewName} />
-      <LabeledInput label="number:" value={newNumber} setValue={setNewNumber} />
+      <LabeledInput label="name:" value={name} setValue={setName} />
+      <LabeledInput label="number:" value={number} setValue={setNumber} />
       <div>
         <button type="submit" onClick={addPerson}>
           add

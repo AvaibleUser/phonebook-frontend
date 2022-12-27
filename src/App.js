@@ -7,7 +7,7 @@ import Filter from "./components/LabeledInput";
 import Persons from "./components/Persons";
 import PersonForm from "./components/PersonForm";
 
-const url = "/api/persons";
+import personsService from "./services/persons";
 
 const filterPersons = (name, persons) => {
   if (!name) return persons;
@@ -25,9 +25,7 @@ const App = () => {
   const filteredPersons = filterPersons(filter, persons);
 
   useEffect(() => {
-    const setPersonsFromServer = (res) => setPersons(res.data);
-
-    axios.get(url).then(setPersonsFromServer);
+    personsService.getPersons().then(setPersons);
   }, []);
 
   return (
@@ -38,11 +36,11 @@ const App = () => {
       <h3>Add a new</h3>
       <PersonForm
         persons={persons}
-        newName={newName}
-        newNumber={newNumber}
+        name={newName}
+        number={newNumber}
         setPersons={setPersons}
-        setNewName={setNewName}
-        setNewNumber={setNewNumber}
+        setName={setNewName}
+        setNumber={setNewNumber}
       />
 
       <h3>Numbers</h3>
