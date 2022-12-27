@@ -24,6 +24,12 @@ const App = () => {
 
   const filteredPersons = filterPersons(filter, persons);
 
+  const removePersonFromState = (id) =>
+    setPersons(persons.filter((person) => person.id !== id));
+
+  const removePerson = (id) =>
+    personsService.removePerson(id).then(() => removePersonFromState(id));
+
   useEffect(() => {
     personsService.getPersons().then(setPersons);
   }, []);
@@ -35,16 +41,15 @@ const App = () => {
 
       <h3>Add a new</h3>
       <PersonForm
-        persons={persons}
         name={newName}
         number={newNumber}
-        setPersons={setPersons}
         setName={setNewName}
         setNumber={setNewNumber}
+        setPersons={setPersons}
       />
 
       <h3>Numbers</h3>
-      <Persons persons={filteredPersons} />
+      <Persons persons={filteredPersons} removePerson={removePerson} />
     </div>
   );
 };

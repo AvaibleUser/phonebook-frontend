@@ -16,8 +16,12 @@ const addPerson = (person) => {
   return getResponseData(axios.post(baseUrl, person));
 };
 
-const modifyPerson = async (id, person) => {
-  return getResponseData(axios.put(`${baseUrl}/${id}`, person));
+const modifyPerson = async (person) => {
+  return getResponseData(axios.put(`${baseUrl}/${person.id}`, person));
 };
 
-export default { getPersons, addPerson, modifyPerson };
+const removePerson = async (id) => {
+  return getResponseData(axios.delete(`${baseUrl}/${id}`));
+};
+
+export default { getPersons, addPerson, modifyPerson, removePerson };
