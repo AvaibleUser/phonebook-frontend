@@ -3,12 +3,12 @@ import React from 'react';
 import LabeledInput from './LabeledInput';
 
 const PersonForm = ({
+  persons,
   newName,
   newNumber,
-  persons,
+  setPersons,
   setNewName,
   setNewNumber,
-  setPersons,
 }) => {
   const addPerson = (event) => {
     event.preventDefault();
@@ -26,8 +26,8 @@ const PersonForm = ({
 
   return (
     <form>
-      <LabeledInput label="name" value={newName} setValue={setNewName} />
-      <LabeledInput label="number" value={newNumber} setValue={setNewNumber} />
+      <LabeledInput label="name:" value={newName} setValue={setNewName} />
+      <LabeledInput label="number:" value={newNumber} setValue={setNewNumber} />
       <div>
         <button type="submit" onClick={addPerson}>
           add
