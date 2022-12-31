@@ -5,7 +5,7 @@ const baseUrl = "/api/persons";
 const getResponseData = async (request) => {
   const response = await request;
 
-  return await response.data;
+  return response.data;
 };
 
 const getAll = () => getResponseData(axios.get(baseUrl));

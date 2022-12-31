@@ -1,5 +1,3 @@
-import React from "react";
-
 import LabeledInput from "./LabeledInput";
 
 const PersonForm = ({ name, number, setName, setNumber, addPerson }) => {

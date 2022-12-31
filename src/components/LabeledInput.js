@@ -1,5 +1,3 @@
-import React from "react";
-
 const LabeledInput = ({ label, value, setValue }) => {
   const catchValueChange = ({ target }) => setValue(target.value);
 
