@@ -16,4 +16,5 @@ const modify = (person) =>
   getResponseData(axios.put(`${baseUrl}/${person.id}`, person));
 
 const remove = (id) => getResponseData(axios.delete(`${baseUrl}/${id}`));
+
 export default { getAll, add, modify, remove };

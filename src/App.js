@@ -21,14 +21,25 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [message, setMessage] = useState("");
   const [filter, setFilter] = useState("");
+  const [error, setError] = useState(false);
 
   const filteredPersons = filterPersons(filter, persons);
 
-  const removePerson = ({ id, name }) =>
-    personsService.remove(id).then(() => {
+  const notFoundPerson = ({ id, name }) => {
+    setPersons(persons.filter((person) => person.id !== id));
+    setMessage(`Information of ${name} has already been removed`);
+    setError(true);
+  };
+
+  const removePerson = async ({ id, name }) => {
+    try {
+      await personsService.remove(id);
       setPersons(persons.filter((person) => person.id !== id));
       setMessage(`Removed ${name}`);
-    });
+    } catch {
+      notFoundPerson({ id, name });
+    }
+  };
 
   const addPerson = async ({ name, number }) => {
     const person = await personsService.add({ name, number });
@@ -37,11 +48,17 @@ const App = () => {
   };
 
   const modifyPerson = async (previousPerson) => {
-    const newPerson = await personsService.modify(previousPerson);
-    setPersons(
-      persons.map((person) => (person.id !== newPerson.id ? person : newPerson))
-    );
-    setMessage(`Number of ${newPerson.name} changed to ${newPerson.number}`);
+    try {
+      const newPerson = await personsService.modify(previousPerson);
+      setPersons(
+        persons.map((person) =>
+          person.id !== newPerson.id ? person : newPerson
+        )
+      );
+      setMessage(`Number of ${newPerson.name} changed to ${newPerson.number}`);
+    } catch {
+      notFoundPerson(previousPerson);
+    }
   };
 
   const addOrModfyPerson = ({ name, number }) => {
@@ -60,7 +77,10 @@ const App = () => {
 
   useEffect(() => {
     if (message) {
-      setTimeout(() => setMessage(""), 5000);
+      setTimeout(() => {
+        setMessage("");
+        setError(false);
+      }, 5000);
     }
   });
 
@@ -68,7 +88,7 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
 
-      <Notification message={message} setMessage={setMessage} />
+      <Notification error={error} message={message} setMessage={setMessage} />
 
       <Filter label="filter shown with" value={filter} setValue={setFilter} />
 
