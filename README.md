@@ -1,25 +1,22 @@
-# The Phonebook - A FullstackOpen Project
+# Phonebook FrontEnd - Exercise of FullstackOpen Project
 
-A phonebook that holds the a bunch of person name and his phone number,
-made with react
+The forntend for a phonebook that shows the name and phone number of a bunch of
+persons, the project is made with react and depends to be serve by the backend
+part of the project (hold in [backend repostory](https://github.com/AvaibleUser/phonebook-backend))
 
 ## How to run it
 
-### PC environment
+### First of all
 
-You need to have installed node and npm, and the ports 3000 and 3001 free, then:
+* Get installed node and npm
+* Get 3000 port free or change it in index.js to a free port for the frontend
+* Get 3001 port free or change it in package.json to a free port for the backend
+* Run `npm install` if you don't already do it.
 
-1. open a terminal
-2. run `$ npm install`
-3. run `$ npm run server`
-4. open another terminal
-5. run `$ npm run start`
+### To debug the app
 
-Now you can go to [phonebook](localhost:3000) and see the website
+*. Run `npm start` on a terminal
+*. Run the backend server on another terminal
 
-### Codespaces environment
+Now you can go to [phonebook](http://localhost:3000) and see the website
 
-1. open a terminal
-2. run `$ npm run docker`
-
-Now you can go to look in the ports forwarded for the link to the website
