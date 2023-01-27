@@ -1,6 +1,11 @@
+import { useState } from "react";
+
 import LabeledInput from "./LabeledInput";
 
-const PersonForm = ({ name, number, setName, setNumber, addPerson }) => {
+const PersonForm = ({ addPerson }) => {
+  const [name, setName] = useState("");
+  const [number, setNumber] = useState("");
+
   const addPersonOnClick = (event) => {
     event.preventDefault();
 

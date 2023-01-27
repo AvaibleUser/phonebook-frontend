@@ -6,28 +6,31 @@ const notificationStyle = {
   borderRadius: 5,
   marginBottom: 10,
   display: "flex",
-  justifyContent: "space-between"
+  justifyContent: "space-between",
 };
 
 const errorStyle = {
-    ...notificationStyle,
-    color: "red",
-    borderColor: "red",
-  };
-  
+  ...notificationStyle,
+  color: "red",
+  borderColor: "red",
+};
+
 const successStyle = {
   ...notificationStyle,
   color: "green",
   borderColor: "green",
 };
 
-const Notification = ({ error, message, setMessage }) =>
-  message ? (
-    <div style={error ? errorStyle : successStyle}>
-      {message} <button onClick={() => setMessage("")}>✖</button>
+const Notification = ({ message, isError, close }) => {
+  const closeTimer = setTimeout(close, 5000);
+
+  const forceClose = () => clearTimeout(closeTimer) || close();
+
+  return (
+    <div style={isError ? errorStyle : successStyle}>
+      {message} <button onClick={forceClose}>✖</button>
     </div>
-  ) : (
-    <></>
   );
+};
 
 export default Notification;
